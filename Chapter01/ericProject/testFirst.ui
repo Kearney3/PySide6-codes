@@ -26,7 +26,7 @@
     <string notr="true">image: url(:/pic1/images/open.jpg);</string>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>按钮</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit">

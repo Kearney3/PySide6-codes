@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-
+# 避免出现中文乱码
 import sys
+
 from PySide6.QtWidgets import QPushButton, QApplication, QWidget
 
 
@@ -14,7 +15,9 @@ class WinForm(QWidget):
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    win = WinForm()
-    win.show()
-    sys.exit(app.exec())
+    app = QApplication.instance()  # 如果存在，则返回实例
+    if app == None:
+        app = QApplication(sys.argv)  # 捕获参数
+    win = WinForm()  # 实例化
+    win.show()  # 显示
+    sys.exit(app.exec())  # exec进入程序主循环
