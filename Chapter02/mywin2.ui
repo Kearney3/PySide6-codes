@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>mywin2</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>430</y>
+      <width>100</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>关闭窗口</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>50</y>
+      <width>481</width>
+      <height>341</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="mywin2_rcc.qrc">:/pic/images/python.jpg</pixmap>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_F">
+    <property name="title">
+     <string>文件(F)</string>
+    </property>
+    <addaction name="FileOpen"/>
+    <addaction name="FileNew"/>
+    <addaction name="FileSave"/>
+   </widget>
+   <widget class="QMenu" name="menu_E">
+    <property name="title">
+     <string>编辑(E)</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_W">
+    <property name="title">
+     <string>窗口(W)</string>
+    </property>
+   </widget>
+   <addaction name="menu_F"/>
+   <addaction name="menu_E"/>
+   <addaction name="menu_W"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="OpenCalc"/>
+   <addaction name="OpenNotepad"/>
+   <addaction name="FileOpen"/>
+   <addaction name="FileNew"/>
+   <addaction name="FileSave"/>
+   <addaction name="FileClose"/>
+  </widget>
+  <action name="FileOpen">
+   <property name="icon">
+    <iconset resource="mywin2_rcc.qrc">
+     <normaloff>:/pic/images/open.jpg</normaloff>:/pic/images/open.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>打开</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="FileNew">
+   <property name="icon">
+    <iconset resource="mywin2_rcc.qrc">
+     <normaloff>:/pic/images/new.jpg</normaloff>:/pic/images/new.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>新建</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="FileSave">
+   <property name="text">
+    <string>保存</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="OpenCalc">
+   <property name="icon">
+    <iconset resource="mywin2_rcc.qrc">
+     <normaloff>:/pic/images/calc.jpg</normaloff>:/pic/images/calc.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>计算器</string>
+   </property>
+   <property name="toolTip">
+    <string>打开计算器</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="OpenNotepad">
+   <property name="icon">
+    <iconset resource="mywin2_rcc.qrc">
+     <normaloff>:/pic/images/notepad.jpg</normaloff>:/pic/images/notepad.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>记事本</string>
+   </property>
+   <property name="toolTip">
+    <string>打开记事本</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="FileClose">
+   <property name="icon">
+    <iconset resource="mywin2_rcc.qrc">
+     <normaloff>:/pic/images/close.jpg</normaloff>:/pic/images/close.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>关闭</string>
+   </property>
+   <property name="toolTip">
+    <string>关闭窗口</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="mywin2_rcc.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>388</x>
+     <y>256</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>369</x>
+     <y>373</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>pressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>testSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>339</x>
+     <y>250</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>303</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>testSlot()</slot>
+ </slots>
+</ui>
