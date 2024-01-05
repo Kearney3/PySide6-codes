@@ -30,6 +30,7 @@ class lineEditDemo(QWidget):
         lineEdit_color.setText("显示红色背景白色字体")
         lineEdit_color.setAutoFillBackground(True)
         palette = QPalette()
+        # palette.setColor(QPalette.Window, Qt.blue)
         palette.setColor(QPalette.Base, Qt.red)
         palette.setColor(QPalette.Text, Qt.white)
         lineEdit_color.setPalette(palette)

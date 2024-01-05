@@ -7,12 +7,15 @@
 
 '''
 
+import os
 import sys
-from PySide6.QtWidgets import *
+
 from PySide6.QtCore import *
 from PySide6.QtGui import *
-import os
+from PySide6.QtWidgets import *
+
 os.chdir(os.path.dirname(__file__))
+
 
 class QScrollAreaWindow(QMainWindow):
     def __init__(self):
@@ -29,15 +32,19 @@ class QScrollAreaWindow(QMainWindow):
         label_scroll.setPixmap(QPixmap("./images/boy.png"))
         self.scroll1 = QScrollArea()
         self.scroll1.setWidget(label_scroll)
+        # 把滚动区域加入布局管理器
         layout_main.addWidget(self.scroll1)
 
-        ## 获取QScrollArea的Widget
+        # 获取QScrollArea的Widget
         widget = self.scroll1.widget()
+        # widget就是 label_scroll
         print(widget is label_scroll)
 
-        ## 获取以及处理QScrollArea的QScrollBar
+        # 获取以及处理QScrollArea的QScrollBar
+        # 水平滚动条
         self.scroll1.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         hScrollBar = self.scroll1.horizontalScrollBar()
+        # 垂直滚动条
         vScrollBar = self.scroll1.verticalScrollBar()
         vScrollBar.setSingleStep(5)
         vScrollBar.setPageStep(50)

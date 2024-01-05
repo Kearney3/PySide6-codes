@@ -7,16 +7,19 @@
 
 '''
 
-from PySide6.QtWidgets import QApplication, QLabel, QWidget, QVBoxLayout
+import os
+import sys
+
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap, QPalette
-import sys
-import os
+from PySide6.QtWidgets import QApplication, QLabel, QWidget, QVBoxLayout
+
 os.chdir(os.path.dirname(__file__))
+
 
 class WindowDemo(QWidget):
     def __init__(self):
-        super().__init__()
+        super(WindowDemo, self).__init__()
 
         # 显示普通标签
         label_normal = QLabel(self)
@@ -55,7 +58,6 @@ class WindowDemo(QWidget):
         label_pic.setToolTip('这是一个图片标签')
         label_pic.setPixmap(QPixmap("./images/cartoon1.ico"))
 
-
         # 添加布局管理
         vbox = QVBoxLayout()
         vbox.addWidget(label_normal)
@@ -73,10 +75,8 @@ class WindowDemo(QWidget):
 
         self.setWindowTitle("QLabel 例子")
 
-
     def link_hovered(self):
         print("你的滑过了“鼠标划过该标签触发事件”。")
-
 
     def link_clicked(self):
         # 设置了setOpenExternalLinks(True)之后会自动屏蔽该信号。

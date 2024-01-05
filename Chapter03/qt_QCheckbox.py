@@ -30,7 +30,7 @@ class CheckBoxDemo(QWidget):
         self.checkBox1.stateChanged.connect(lambda: self.button_click(self.checkBox1))
         layout_child.addWidget(self.checkBox1)
 
-        self.checkBox2 = QCheckBox("Checkbox2")
+        self.checkBox2 = QCheckBox("Checkbox2号")
         self.checkBox2.setChecked(True)
         self.checkBox2.setIcon(QIcon(QPixmap("./images/python.png")))
         self.checkBox2.toggled.connect(lambda: self.button_click(self.checkBox2))
@@ -50,12 +50,14 @@ class CheckBoxDemo(QWidget):
         self.setWindowTitle("checkbox demo")
 
     def button_click(self, btn):
+        # chk1Status = self.checkBox1.text() + ", isChecked=" + str(self.checkBox1.isChecked()) + ', chekState=' + str(
+        #     self.checkBox1.checkState().name.decode('utf8')) + "\n"
         chk1Status = self.checkBox1.text() + ", isChecked=" + str(self.checkBox1.isChecked()) + ', chekState=' + str(
-            self.checkBox1.checkState().name.decode('utf8')) + "\n"
+            self.checkBox1.checkState().name) + "\n"
         chk2Status = self.checkBox2.text() + ", isChecked=" + str(self.checkBox2.isChecked()) + ', checkState=' + str(
-            self.checkBox2.checkState().name.decode('utf8')) + "\n"
+            self.checkBox2.checkState().name) + "\n"
         chk3Status = self.checkBox3.text() + ", isChecked=" + str(self.checkBox3.isChecked()) + ', checkState=' + str(
-            self.checkBox3.checkState().name.decode('utf8')) + "\n"
+            self.checkBox3.checkState().name) + "\n"
         click = '你点击了' + btn.text()
         self.textEdit.setText(chk1Status + chk2Status + chk3Status+click)
 

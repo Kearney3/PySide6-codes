@@ -8,9 +8,10 @@
 '''
 
 import sys
+
+from PySide6.QtCore import QDate, QDateTime, QTime
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
-from PySide6.QtCore import QDate, QDateTime, QTime
 
 
 class DateTimeEditDemo(QWidget):
@@ -39,6 +40,9 @@ class DateTimeEditDemo(QWidget):
         # QDateEdit 示例
         dateEdit = QDateEdit(QDate.currentDate())
         dateEdit.setDateRange(QDate(2015, 1, 1), QDate(2030, 12, 31))
+        # dateEdit.setCalendarPopup(True)
+        # dateEdit.setMinimumDate(QDate(2015, 1, 1))
+        # dateEdit.setMaximumDate(QDate(2030, 12, 31))
         dateLabel = QLabel('QDateEdit示例:')
         vlayout.addWidget(dateLabel)
         vlayout.addWidget(dateEdit)
@@ -57,6 +61,7 @@ class DateTimeEditDemo(QWidget):
         formatComboBox.addItems(
             ["yyyy-MM-dd hh:mm:ss (zzz 'ms')", "hh:mm:ss MM/dd/yyyy", "hh:mm:ss dd/MM/yyyy", "北京时间: hh:mm:ss",
              "hh:mm ap"])
+        # 传递 combobox信号到 meetingEdit
         formatComboBox.textActivated.connect(
             lambda: self.setFormatString(formatComboBox.currentText(), meetingEdit))
         vlayout.addWidget(formatLabel)
@@ -105,8 +110,10 @@ class DateTimeEditDemo(QWidget):
         meetingEdit.setDisplayFormat(formatString)
 
         if meetingEdit.displayedSections() & QDateTimeEdit.DateSections_Mask:
+            # 当前显示的日期时间包含日期
             meetingEdit.setDateRange(QDate(2004, 11, 1), QDate(2005, 11, 30))
         else:
+            # 只包含时间
             meetingEdit.setTimeRange(QTime(0, 7, 20, 0), QTime(21, 0, 0, 0))
 
 

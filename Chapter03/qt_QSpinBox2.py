@@ -2,6 +2,7 @@
 
 '''
     【简介】
+    自定义显示 QSpinBox
 	PySide6中 QSpinBox 例子
    
   
@@ -18,13 +19,16 @@ class myQSpinBox(QSpinBox):
         super(myQSpinBox, self).__init__(parent)
 
     def valueFromText(self, text):
+        # 继承重新实现
         regExp = QRegularExpression("(\\d+)(\\s*[xx]\\s*\\d+)?")
         match = regExp.match(text)
         if match.isValid():
-            return match.captured(1).toInt()
+            # return match.captured(1).toInt()
+            return int(match.captured(1))
         return 0
 
     def textFromValue(self, val):
+        # 继承重新实现
         return ('%s x %s' % (val, val))
 
 

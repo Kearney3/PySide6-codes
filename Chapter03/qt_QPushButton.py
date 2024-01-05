@@ -22,7 +22,9 @@ class Form(QDialog):
         layout.addWidget(self.label_show)
 
         self.button1 = QPushButton("Button1")
+        # 有2种状态
         self.button1.setCheckable(True)
+        # 切换成选中状态
         self.button1.toggle()
         self.button1.clicked.connect(lambda: self.button_click(self.button1))
         layout.addWidget(self.button1)
@@ -38,6 +40,7 @@ class Form(QDialog):
         layout.addWidget(self.button_disabled)
 
         self.button_shortcut = QPushButton("&Shortcut_Key")
+        # 设置为默认按钮
         self.button_shortcut.setDefault(True)
         self.button_shortcut.setCheckable(True)
         self.button_shortcut.clicked.connect(lambda: self.button_click(self.button_shortcut))

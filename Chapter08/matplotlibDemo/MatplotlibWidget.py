@@ -19,7 +19,23 @@ class MyMplCanvas(FigureCanvas):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
 
         # 配置中文显示
-        plt.rcParams['font.family'] = ['SimHei']  # 用来正常显示中文标签
+        # plt.rcParams['font.family'] = ['SimHei']  # 用来正常显示中文标签
+        import platform
+
+        system_name = platform.system()
+
+        if system_name == 'Windows':
+            # Windows系统
+            plt.rcParams['font.family'] = ['SimHei']
+        elif system_name == 'Darwin':
+            # macOS系统
+            plt.rcParams['font.family'] = ['PingFang HK']
+        elif system_name == 'Linux':
+            # Linux系统（可能需要根据具体发行版进行调整）
+            plt.rcParams['font.family'] = ['DejaVu Sans']
+        else:
+            # 其他系统或无法识别系统，默认字体
+            plt.rcParams['font.family'] = ['sans-serif']
         plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 
         self.fig = Figure(figsize=(width, height), dpi=dpi)  # 新建一个figure

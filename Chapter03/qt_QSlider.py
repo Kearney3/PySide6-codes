@@ -21,7 +21,6 @@ class SliderDemo(QWidget):
         self.label = QLabel("Hello Qt for Python")
         self.label.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.label)
-
         # 水平滑块
         self.slider_horizon = QSlider(Qt.Horizontal)
         self.slider_horizon.setMinimum(10)
@@ -53,7 +52,7 @@ class SliderDemo(QWidget):
 
     def valuechange(self,slider):
         size = slider.value()
-        self.label.setText('选中大小：%d'%size)
+        self.label.setText(f'选中大小：{size}')
         self.label.setFont(QFont("Arial", size))
 
 

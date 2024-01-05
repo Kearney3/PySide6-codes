@@ -17,12 +17,14 @@ class Radiodemo(QWidget):
     def __init__(self, parent=None):
         super(Radiodemo, self).__init__(parent)
         layout = QHBoxLayout(self)
+        # layout = QHBoxLayout()
         self.label = QLabel('显示按钮按下信息')
         self.label.setFixedWidth(120)
         layout.addWidget(self.label)
 
         # button1,button2未接管按钮
         self.button1 = QRadioButton("按钮1")
+        # 默认选中
         self.button1.setChecked(True)
         self.button1.toggled.connect(lambda: self.button_select(self.button1))
         layout.addWidget(self.button1)
@@ -32,7 +34,8 @@ class Radiodemo(QWidget):
         layout.addWidget(self.button2)
         
         # button3,button4 使用groupbox接管按钮
-        group_box1 = QGroupBox('QGroupbox', self)
+        group_box1 = QGroupBox('QGroupbox管理', self)
+        # 垂直布局
         layout_group_box = QVBoxLayout()
         self.button3 = QRadioButton("按钮3")
         self.button3.setChecked(True)

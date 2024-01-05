@@ -36,7 +36,7 @@ class TextEditDemo(QWidget):
         self.textEdit.setFontItalic(True)
         self.textEdit.setFontWeight(QFont.ExtraBold)
         self.textEdit.setFontUnderline(True)
-        self.textEdit.setFontFamily('宋体')
+        self.textEdit.setFontFamily('SimSun')
         self.textEdit.setFontPointSize(15)
         self.textEdit.setTextColor(QColor(200,75,75))
         # self.textEdit.setText('Hello Qt for Python!\n单击按钮')
@@ -47,7 +47,7 @@ class TextEditDemo(QWidget):
         a = ''
 
         dirname = _path = os.path.dirname(__file__)
-        with open(dirname+'\support\myhtml.html', 'r', encoding='utf8') as f:
+        with open(dirname+'/support/myhtml.html', 'r', encoding='utf8') as f:
             a = f.read()
         self.textEdit.setHtml(a)
 
@@ -56,7 +56,7 @@ class TextEditDemo(QWidget):
     def btn_markdown_Clicked(self):
         a = ''
         dirname = _path = os.path.dirname(__file__)
-        with open(dirname+'\support\myMarkDown.md', 'r', encoding='utf8') as f:
+        with open(dirname+'/support/myMarkDown.md', 'r', encoding='utf8') as f:
             a = f.read()
         self.textEdit.setMarkdown(a)
 

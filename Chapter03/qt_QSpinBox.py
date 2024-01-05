@@ -8,6 +8,7 @@
 '''
 
 import sys
+
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
@@ -26,7 +27,7 @@ class spindemo(QWidget):
         self.label.setAlignment(Qt.AlignLeft)
         layout.addWidget(self.label)
 
-        self.spinbox = QSpinBox()
+        self.spinbox = QSpinBox(minimumWidth=200)
         layout.addRow(QLabel('默认显示'), self.spinbox)
         self.spinbox.valueChanged.connect(lambda: self.on_valuechange(self.spinbox))
 
@@ -44,6 +45,8 @@ class spindemo(QWidget):
         self.spinbox_wrap.setRange(-20, 20)
         self.spinbox_wrap.setSingleStep(5)
         self.spinbox_wrap.setWrapping(True)
+        self.spinbox_wrap.setToolTip('这是一个循环')
+        # self.spinbox_wrap.setEnabled(False)
         layout.addRow(label, self.spinbox_wrap)
         self.spinbox_wrap.valueChanged.connect(lambda: self.on_valuechange(self.spinbox_wrap))
 
@@ -57,31 +60,28 @@ class spindemo(QWidget):
         layout.addRow(label, self.spinbox_price)
         self.spinbox_price.valueChanged.connect(lambda: self.on_valuechange(self.spinbox_price))
 
-
         self.groupSeparatorSpinBox = QSpinBox()
         self.groupSeparatorSpinBox.setRange(-99999999, 99999999)
         self.groupSeparatorSpinBox.setValue(1000)
+        # 显示千分符
         self.groupSeparatorSpinBox.setGroupSeparatorShown(True)
         groupSeparatorChkBox = QCheckBox()
         groupSeparatorChkBox.setText("千分隔符：")
         groupSeparatorChkBox.setChecked(True)
         layout.addRow(groupSeparatorChkBox, self.groupSeparatorSpinBox)
-        groupSeparatorChkBox.toggled.connect(self.groupSeparatorSpinBox.setGroupSeparatorShown)
+        groupSeparatorChkBox.toggled.connect(self.groupSeparatorSpinBox.setGroupSeparatorShown)  # 传递 Ture or False
         self.groupSeparatorSpinBox.valueChanged.connect(lambda: self.on_valuechange(self.groupSeparatorSpinBox))
-
 
         label = QLabel("特殊文本：")
         self.spinbox_zoom = QSpinBox()
         self.spinbox_zoom.setRange(0, 1000)
         self.spinbox_zoom.setSingleStep(10)
         self.spinbox_zoom.setSuffix("%")
+        # 设置特殊文本,当前值等于 minimum()时显示
         self.spinbox_zoom.setSpecialValueText("Automatic")
         self.spinbox_zoom.setValue(100)
         layout.addRow(label, self.spinbox_zoom)
         self.spinbox_zoom.valueChanged.connect(lambda: self.on_valuechange(self.spinbox_zoom))
-
-
-
 
         self.setLayout(layout)
 

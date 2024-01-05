@@ -29,7 +29,10 @@ class CalendarExample(QWidget):
         self.cal.setMaximumDate(QDate(3000, 1, 1))
         self.cal.setGridVisible(True)
         self.cal.setSelectedDate(QDate(2010, 1, 30))
-        self.cal.setHorizontalHeaderFormat(QCalendarWidget.LongDayNames)
+        # self.cal.setHorizontalHeaderFormat(QCalendarWidget.LongDayNames)
+        self.cal.setHorizontalHeaderFormat(QCalendarWidget.ShortDayNames)
+        # 不显示周数
+        self.cal.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)
         # self.cal.setFirstDayOfWeek(Qt.Wednesday)
         self.cal.setFirstDayOfWeek(Qt.Wednesday)
         self.cal.move(20, 20)

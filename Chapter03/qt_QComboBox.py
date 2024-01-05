@@ -4,19 +4,19 @@
     【简介】
 	PySide6中 QComboBox 例子
 '''
-import sys
-from PySide6.QtWidgets import *
-from PySide6.QtGui import *
-from PySide6.QtCore import *
-from functools import partial
 import os
-os.chdir(os.path.dirname(__file__))
+import sys
+from functools import partial
 
+from PySide6.QtCore import *
+from PySide6.QtGui import *
+from PySide6.QtWidgets import *
+
+os.chdir(os.path.dirname(__file__))
 
 item_list = ["C", "C++", "Java", "Python", "JavaScript", "C#", "Swift", "go", "Ruby", "Lua", "PHP"]
 
 data_list = [1972, 1983, 1995, 1991, 1992, 2000, 2014, 2009, 1995, 1993, 1995]
-
 
 
 class Widget(QWidget):
@@ -32,8 +32,8 @@ class Widget(QWidget):
 
         # 增加单项，不带数据
         self.combobox_addOne = QComboBox(self, minimumWidth=200)
-        for i in range(len(item_list)):
-            self.combobox_addOne.addItem(icon, item_list[i])
+        for item in item_list:
+            self.combobox_addOne.addItem(icon, item)
         self.combobox_addOne.setCurrentIndex(-1)
         layout.addRow(QLabel("增加单项，不带数据"), self.combobox_addOne)
 
@@ -57,7 +57,7 @@ class Widget(QWidget):
         self.combobox_edit.setEditable(True)
         for i in range(len(item_list)):
             self.combobox_edit.addItem(icon, item_list[i])
-        self.combobox_edit.setInsertPolicy(self.combobox_edit.InsertAfterCurrent)
+        self.combobox_edit.setInsertPolicy(QComboBox.InsertAfterCurrent)
         self.combobox_edit.setCurrentIndex(-1)
         layout.addRow(QLabel("允许修改1:默认"), self.combobox_edit)
 
@@ -76,6 +76,7 @@ class Widget(QWidget):
         # 删除项目
         layout_child = QHBoxLayout()
         self.button1 = QPushButton('删除项目')
+        # self.button1.setMinimumWidth(200)
         self.button2 = QPushButton('删除显示')
         self.button3 = QPushButton('删除所有')
         self.combobox_del = QComboBox(minimumWidth=200)
@@ -100,8 +101,8 @@ class Widget(QWidget):
         layout.addRow(QLabel("模型接管，不带数据"), self.combobox_model)
 
         # 信号与槽
-        self.combobox_addOne.activated.connect(lambda x: self.on_activate(x, self.combobox_addOne))
-        self.combobox_addData.activated.connect(partial(self.on_activate, *args, combobox=self.combobox_addData))
+        self.combobox_addOne.activated.connect(lambda x: self.on_activate(x, self.combobox_addOne))  # 传递 x 为索引
+        self.combobox_addData.activated.connect(partial(self.on_activate, *args, combobox=self.combobox_addData))  # 预定义参数
         self.combobox_addMore.highlighted.connect(lambda x: self.on_activate(x, self.combobox_addMore))
         self.combobox_model.activated.connect(lambda x: self.on_activate(x, self.combobox_model))
         self.combobox_edit.activated.connect(lambda x: self.on_activate(x, self.combobox_edit))
@@ -111,7 +112,7 @@ class Widget(QWidget):
     def on_activate(self, index, combobox=None):
         _str = ' 信号index: {};\n currentIndex: {};\n 信号index==currentIndex: {};\n count: {};\n currentText: {};\n currentData: {};\n itemData: {};\n itemText: {};\n'.format(
             index, combobox.currentIndex(), index == combobox.currentIndex(), combobox.count(), combobox.currentText(),
-            combobox.currentData(), combobox.itemData(index),combobox.itemText(index))
+            combobox.currentData(), combobox.itemData(index), combobox.itemText(index))
         self.label.setText(_str)
 
 

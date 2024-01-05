@@ -19,7 +19,8 @@ class TextBrowser(QMainWindow):
         self.textBrowser = QTextBrowser()
         self.textBrowser.setAcceptRichText(True)
         self.textBrowser.setOpenExternalLinks(True)
-        self.textBrowser.setSource(QUrl(r'.\support\textBrowser.html'))
+        # 记录初始化 URL
+        self.textBrowser.setSource(QUrl(r'./support/textBrowser.html'))
         self.textBrowser.anchorClicked.connect(lambda url:self.statusBar().showMessage('你点击了url'+urllib.parse.unquote(url.url()),3000))
         self.textBrowser.historyChanged.connect(self.show_anchor)
 
