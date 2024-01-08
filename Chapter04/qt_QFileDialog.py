@@ -54,17 +54,19 @@ class filedialogdemo(QWidget):
         self.button_save = QPushButton("存储文件")
         self.button_save.clicked.connect(self.file_save)
         layout.addWidget(self.button_save)
-
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.setLayout(layout)
         self.setWindowTitle("File Dialog 例子")
 
     def file_pic_filter1(self):
+        """加载图片，静态方法"""
         fname, _ = QFileDialog.getOpenFileName(self, caption='Open file1', dir=os.path.abspath('.') + '\\images',
                                                filter="Image files (*.jpg *.png);;Image files2(*.ico *.gif);;All files(*)")
         self.label.setPixmap(QPixmap(fname))
         self.label2.setText('你选择了:\n' + fname)
 
     def file_pic_filter2(self):
+        """加载图片，实例化方法"""
         file_dialog = QFileDialog(self, caption='Open file2', directory=os.path.abspath('.') + '\\images',
                                   filter="Image files (*.jpg *.png);;Image files2(*.ico *.gif);;All files(*)")
 
@@ -74,6 +76,7 @@ class filedialogdemo(QWidget):
             self.label2.setText('你选择了:\n' + file_path_list[0])
 
     def file_pic_filter3(self):
+        """加载图片，实例化方法"""
         file_dialog = QFileDialog()
         file_dialog.setWindowTitle('Open file3')
         file_dialog.setDirectory(os.path.abspath('.') + '\\images')
@@ -85,34 +88,42 @@ class filedialogdemo(QWidget):
             self.label2.setText('你选择了:\n' + file_path_list[0])
 
     def file_MultiFile1(self):
+        """多文件选择，静态方法"""
         file_path_list, _ = QFileDialog.getOpenFileNames(self, caption='选择多个文件', dir=os.path.abspath('.'),
                                                          filter="All files(*);;Python files(*.py);;Image files (*.jpg *.png);;Image files2(*.ico *.gif)")
         self.label.setText('你选择了如下路径：\n' + ';\n'.join(file_path_list))
         self.label2.setText('')
 
     def file_MultiFile2(self):
+        """多文件选择，实例化"""
         file_dialog = QFileDialog(self, caption='选择多个文件', directory=os.path.abspath('.'),
                                   filter="All files(*);;Python files(*.py);;Image files (*.jpg *.png);;Image files2(*.ico *.gif)")
-        file_dialog.setFileMode(file_dialog.ExistingFiles)
+        # 零或多个文件
+        file_dialog.setFileMode(QFileDialog.ExistingFiles)
+        # file_dialog.setFileMode(QFileDialog.Directory)
         if file_dialog.exec():
             file_path_list = file_dialog.selectedFiles()
             self.label.setText('你选择了如下路径：\n' + ';\n'.join(file_path_list))
             self.label2.setText('')
 
     def file_mode_show(self):
+        """文件夹选择，实例化"""
         file_dialog = QFileDialog(self, caption='file_mode示例：选择文件夹', directory=os.path.abspath('.'))
-        file_dialog.setFileMode(file_dialog.Directory)
+        # file_dialog = QFileDialog(self, caption='file_mode示例：选择文件夹', directory=os.path.abspath('.'), filter="All files(*);;Python files(.*.py);;Image files(*.jpg)")
+        file_dialog.setFileMode(QFileDialog.Directory)
         if file_dialog.exec():
             file_path_list = file_dialog.selectedFiles()
             self.label.setText('你选择了如下路径：\n' + ';\n'.join(file_path_list))
             self.label2.setText('')
 
     def directory_show(self):
+        """文件夹选择，静态方法"""
         directory_path = QFileDialog.getExistingDirectory(caption='获取存储路径', dir=os.path.abspath('.'))
         self.label.setText('获取目录：\n' + directory_path)
         self.label2.setText('')
 
     def file_save(self):
+        """存储路径选择，静态方法"""
         file_save_path, _ = QFileDialog.getSaveFileName(self, caption='获取存储路径', dir=os.path.abspath('.'),
                                                         filter="All files(*);;Python files(*.py);;Image files (*.jpg *.png);;Image files2(*.ico *.gif)")
         self.label.setText('存储路径如下：\n' + file_save_path)

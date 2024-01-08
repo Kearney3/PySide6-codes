@@ -23,11 +23,15 @@ class DialogDemo(QWidget):
         layout = QVBoxLayout(self)
         self.setLayout(layout)
 
+        # 创建对话框, 无父窗口
         self.label_brother = QLabel('我是对话框的兄弟窗口\n弹出对话框后你能关闭我吗？')
         font = QFont()
         font.setPointSize(20)
         self.label_brother.setFont(font)
+        # 非模式对话框
         self.label_brother.show()
+
+        # 创建标签
         self.label = QLabel('我会显示对话框的信息：')
         layout.addWidget(self.label)
 
@@ -82,43 +86,55 @@ class DialogDemo(QWidget):
 
 
     def showdialog_normal(self):
+        # 添加对话框，没有父类
         dialog = QDialog()
+        # 添加布局
+        layout = QVBoxLayout()
+        dialog.setLayout(layout)
         button = QPushButton("OK", dialog)
         button.clicked.connect(dialog.accept)
+        layout.addWidget(button)
         dialog.setWindowTitle("Dialog 案例-普通对话框")
         dialog.setMinimumWidth(200)
-        self.label.setText('默认对话框：“%s” \n 你只有关闭对话框才能进行其他操作' % dialog.windowTitle())
+        self.label.setText(f'默认对话框：“{dialog.windowTitle()}” \n 你只有关闭对话框才能进行其他操作')
+        # exec()执行对话框
         dialog.exec()
 
     def showdialog_return(self):
+        # 没有父类
         dialog = QDialog()
         dialog.setWindowTitle("Dialog 案例-返回值")
         self.label.setText('测试对话框返回值：“%s” \n 你只有关闭对话框才能进行其他操作' % dialog.windowTitle())
         layout = QHBoxLayout()
         dialog.setLayout(layout)
-
+        # OK按钮， 父类 dialog
         button_OK = QPushButton("OK", dialog)
-        button_OK.clicked.connect(dialog.accept)
+        button_OK.clicked.connect(dialog.accept)    # 返回1
         layout.addWidget(button_OK)
+        # Cancel 按钮
         button_Cancel = QPushButton("Cancel", dialog)
-        button_Cancel.clicked.connect(dialog.reject)
+        button_Cancel.clicked.connect(dialog.reject)    # 返回0
         layout.addWidget(button_Cancel)
-
+        # DoneOK 按钮
         button_DoneOK = QPushButton("Done_OK", dialog)
-        button_DoneOK.clicked.connect(lambda: dialog.done(QDialog.Accepted))
+        button_DoneOK.clicked.connect(lambda: dialog.done(QDialog.Accepted))    # 返回1
         layout.addWidget(button_DoneOK)
+        # DoneCancel 按钮
         button_DoneCancel = QPushButton("Done_Cancel", dialog)
-        button_DoneCancel.clicked.connect(lambda: dialog.done(QDialog.Rejected))
+        button_DoneCancel.clicked.connect(lambda: dialog.done(QDialog.Rejected))    # 返回0
         layout.addWidget(button_DoneCancel)
+        # 自定义按钮
         button_DoneOthers = QPushButton("Done_自定义返回值", dialog)
         button_DoneOthers.clicked.connect(lambda: dialog.done(66))
         layout.addWidget(button_DoneOthers)
-
+        # 记录返回值
         out = dialog.exec()
         self.label.setText('对话框：“%s” 返回值为：%s' % (dialog.windowTitle(), out))
 
     def showdialog_father(self):
+        # 有父类self
         dialog = QDialog(self)
+        # button父类 dialog
         button = QPushButton("OK", dialog)
         button.clicked.connect(dialog.accept)
         dialog.setWindowTitle("Dialog 案例-有父窗口对话框")
@@ -127,16 +143,19 @@ class DialogDemo(QWidget):
         dialog.exec()
 
     def showdialog_model1(self):
+        # 无父类
         dialog = QDialog()
         button = QPushButton("OK", dialog)
         button.clicked.connect(dialog.accept)
         dialog.setWindowTitle("Dialog 案例-模式窗口(exec)")
         dialog.setMinimumWidth(250)
+        # 该窗口是单个窗口层次结构的模式，阻止访问其父窗口、祖父母窗口以及其同级窗口
         dialog.setWindowModality(Qt.WindowModal)
         self.label.setText('修改默认模式：“%s” \n 我没有父类所以我不影响程序其他窗口' % dialog.windowTitle())
         dialog.exec()
 
     def showdialog_model2(self):
+        # 有父类
         dialog = QDialog(self)
         button = QPushButton("OK", dialog)
         button.clicked.connect(dialog.accept)
@@ -144,9 +163,11 @@ class DialogDemo(QWidget):
         dialog.setMinimumWidth(250)
         dialog.setWindowModality(Qt.WindowModal)
         self.label.setText('修改默认模式：“%s” \n 我有父类，我能影响父窗口，不能影响兄弟窗口' % dialog.windowTitle())
-        dialog.exec()
+        out = dialog.exec()   # 返回 1
+        self.label.setText(f'{out}')
 
     def showdialog_model3(self):
+        # 有父类
         dialog = QDialog(self)
         button = QPushButton("OK", dialog)
         button.clicked.connect(dialog.accept)
@@ -154,6 +175,7 @@ class DialogDemo(QWidget):
         dialog.setMinimumWidth(250)
         dialog.setWindowModality(Qt.WindowModal)
         self.label.setText('修改默认模式：“%s” \n 我有父类，我能影响父窗口，不能影响兄弟窗口' % dialog.windowTitle())
+        # show 无返回值
         dialog.show()
 
     def showdialog_model4(self):
@@ -164,6 +186,7 @@ class DialogDemo(QWidget):
         dialog.setMinimumWidth(250)
         # dialog.setWindowModality(Qt.NonModal)
         self.label.setText('修改默认模式：“%s” \n 我是非模式窗口，我不能影响程序其他窗口' % dialog.windowTitle())
+        # show 默认调用非模式对话框
         dialog.show()
 
 
@@ -176,7 +199,6 @@ class DialogDemo(QWidget):
         # dialog.setWindowModality(Qt.ApplicationModal)
         self.label.setText('错误启动方式：“%s” \n 我是错误的使用方法，你可以看出来我错在哪了吗？\n 我有哪些解决办法？' % dialog.windowTitle())
         dialog.show()
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

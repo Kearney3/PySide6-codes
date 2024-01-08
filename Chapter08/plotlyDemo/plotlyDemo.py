@@ -28,7 +28,7 @@ class MainWindow(QWidget):
 
     def get_plotly_path_if_hs300_bais(self, file_name='if_hs300_bais.html'):
         path_plotly = self.path_dir_plotly_html + os.sep + file_name
-        df = pd.read_excel(r'plotly_html\if_index_bais.xlsx')
+        df = pd.read_excel(r'plotly_html/if_index_bais.xlsx')
 
         '''绘制散点图'''
         line_main_price = go.Scatter(

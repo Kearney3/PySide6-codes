@@ -27,6 +27,8 @@ class FontDialogDemo(QWidget):
 
         self.fontButton2 = QPushButton("设置Qwidget字体")
         self.fontButton2.clicked.connect(lambda:self.setFont(QFontDialog.getFont(self.font(),self)[1]))
+        # self.fontButton2.clicked.connect(lambda:self.setFont(QFontDialog.getFont()[1]))
+        # self.setFont(QFontDialog.getFont(self.font(), self)[1])
         layout.addWidget(self.fontButton2)
 
         self.setLayout(layout)
@@ -37,6 +39,7 @@ class FontDialogDemo(QWidget):
         ok, font = QFontDialog.getFont()
         if ok:
             self.fontLabel.setFont(font)
+            print(font.family())
 
 
 if __name__ == '__main__':

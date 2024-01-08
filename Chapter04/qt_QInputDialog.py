@@ -16,10 +16,12 @@ from PySide6.QtWidgets import *
 class InputdialogDemo(QWidget):
     def __init__(self, parent=None):
         super(InputdialogDemo, self).__init__(parent)
+        # 表格管理器
         layout = QFormLayout()
         self.btn1 = QPushButton("获得列表里的选项")
         self.btn1.clicked.connect(self.getItem)
         self.le1 = QLineEdit()
+        # 添加行
         layout.addRow(self.btn1, self.le1)
 
         self.btn2 = QPushButton("获得字符串")
@@ -46,7 +48,8 @@ class InputdialogDemo(QWidget):
         self.setWindowTitle("Input Dialog 例子")
 
     def getItem(self):
-        items = ("C", "C++", "Java", "Python")
+        # items = ("C", "C++", "Java", "Python")
+        items = ["C", "C++", "Java", "Python"]
         item, ok = QInputDialog.getItem(self, "select input dialog",
                                         "语言列表", items, 0, False)
         if ok and item:

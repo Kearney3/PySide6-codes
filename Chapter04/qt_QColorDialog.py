@@ -84,8 +84,8 @@ class DialogOptionsWidget(QWidget):
         result = 0
         for checkBox_tuple in self.checkBoxList:
             if checkBox_tuple[0].isChecked():
-                result = result|checkBox_tuple[1]
-        return result
+                result |= checkBox_tuple[1].value
+        return QColorDialog.ColorDialogOption(result)
 
 
 if __name__ == '__main__':

@@ -23,6 +23,9 @@ class matplotlibDemo(QMainWindow):
         layoutButton.addWidget(buttonStatic)
         layoutButton.addWidget(buttonDynamic)
         layoutButton.addStretch(1)
+        fontButton = QPushButton('设置字体')
+        fontButton.clicked.connect(self.setPlotFont)
+        layoutButton.addWidget(fontButton)
         layout = QVBoxLayout()
         layout.addLayout(layoutButton)
         layout.addStretch(1)
@@ -47,13 +50,33 @@ class matplotlibDemo(QMainWindow):
 
     def initPlot(self):
         # 配置matplotlib中文显示
-        plt.rcParams['font.family'] = ['SimHei']  # 用来正常显示中文标签
+        import platform
+        system_name = platform.system()
+
+        if system_name == 'Windows':
+            # Windows系统
+            plt.rcParams['font.family'] = ['SimHei']
+        elif system_name == 'Darwin':
+            # macOS系统
+            plt.rcParams['font.family'] = ['PingFang HK']
+        elif system_name == 'Linux':
+            # Linux系统（可能需要根据具体发行版进行调整）
+            plt.rcParams['font.family'] = ['DejaVu Sans']
+        else:
+            # 其他系统或无法识别系统，默认字体
+            plt.rcParams['font.family'] = ['sans-serif']
         plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 
         # 绘制静态图，这里不需要触发self.static_canvas.draw()
         self._static_ax = self.static_canvas.figure.subplots()
         t = np.linspace(0, 10, 501)
         self._static_ax.plot(t, np.tan(t), ".")
+
+    def setPlotFont(self):
+        ok, font = QFontDialog.getFont()
+        if ok:
+            plt.rcParams['font.family'] = font.family()
+            print(font.family())
 
     def onButtonStatic(self):
         fig = self.static_canvas.figure

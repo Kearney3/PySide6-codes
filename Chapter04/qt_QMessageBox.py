@@ -20,6 +20,7 @@ class WinForm(QMainWindow):
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.label = QLabel('显示消息框信息')
+        self.label.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.label)
 
         button1 = QPushButton()
@@ -74,6 +75,7 @@ class WinForm(QMainWindow):
         msgBox.setStandardButtons(QMessageBox.Ok |QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel| QMessageBox.No)
         msgBox.setDefaultButton(QMessageBox.Save)
         msgBox.setIcon(QMessageBox.Information)
+        # msgBox.setIcon(QMessageBox.Critical)
 
         # 自定义按钮
         button1 = QPushButton('MyOk-ApplyRole')

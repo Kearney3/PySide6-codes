@@ -48,10 +48,12 @@ class Main(QMainWindow):
         self.slider_horizon = QSlider(Qt.Horizontal)
         self.slider_horizon.setRange(10, 120)
         layout.addWidget(self.slider_horizon)
+        # 滑块改变发出信号
         self.slider_horizon.valueChanged.connect(lambda: self.valuechange(self.slider_horizon))
         bar = QProgressBar(self)  # QProgressBar
         bar.valueChanged.connect(lambda value: print('自定义Bar的Value值：', value))
         bar.setRange(1, 80)
+        # 滑块改变发出信号
         self.slider_horizon.valueChanged.connect(lambda value: bar.setValue(value))
         layout.addWidget(bar)
         # self.slider_horizon.valueChanged.connect(self.pd_slider.setValue)
@@ -59,6 +61,7 @@ class Main(QMainWindow):
         self.resize(300, 200)
 
     def show_modeless(self):
+        """无模式窗口"""
         pd_modeless = QProgressDialog("无模式进度条：可以操作父窗口", "Cancel", 0, 12)
         pd_modeless.move(300, 600)
 
@@ -83,9 +86,11 @@ class Main(QMainWindow):
         pd_modeless.canceled.connect(self.timer.stop)
 
     def show_modal(self):
+        """有模式窗口，有父窗口"""
         max = 10
         pd_modal = QProgressDialog("模式进度条：不可以操作父窗口", "终止", 0, max, self)
         pd_modal.move(300, 600)
+        # 阻断父窗口，祖父窗口和同级窗口
         pd_modal.setWindowModality(Qt.WindowModal)
         # pd_modal.setWindowModality(Qt.ApplicationModal)
         pd_modal.setMinimumDuration(1000)  # 一秒后出现对话框
@@ -104,10 +109,12 @@ class Main(QMainWindow):
             # pd_modal.setValue(max)
 
     def get_pd_auto(self):
+        """不会自动关闭和重置的进度条"""
         if not hasattr(self, 'pd_auto'):
             max = 5
             self.pd_auto = QProgressDialog("我不会自动关闭和重置，哈哈", "终止", 0, max, self)
             self.pd_auto.move(300, 600)
+            # 阻断所有窗口
             self.pd_auto.setWindowModality(Qt.ApplicationModal)
             self.pd_auto.setMinimumDuration(1000)
             # self.pd_auto.setValue(0)
@@ -153,6 +160,7 @@ class Main(QMainWindow):
         pd_custom.canceled.connect(lambda: self.cancel(pd_custom))
 
         for i in range(-1, bar.maximum() + 1):
+            # 会从 minimum开始，不会从-1开始
             pd_custom.setValue(i)
             self.label.setText('当前进度条值: {}\n最大值: {}\n是否取消(重置)过进度条: {}'.format(pd_custom.value(), pd_custom.maximum(),
                                                                               pd_custom.wasCanceled()))
