@@ -52,7 +52,6 @@ class matplotlibDemo(QMainWindow):
         # 配置matplotlib中文显示
         import platform
         system_name = platform.system()
-
         if system_name == 'Windows':
             # Windows系统
             plt.rcParams['font.family'] = ['SimHei']
@@ -70,9 +69,10 @@ class matplotlibDemo(QMainWindow):
         # 绘制静态图，这里不需要触发self.static_canvas.draw()
         self._static_ax = self.static_canvas.figure.subplots()
         t = np.linspace(0, 10, 501)
-        self._static_ax.plot(t, np.tan(t), ".")
+        self._static_ax.plot(t, np.arctan(t), ".")
 
     def setPlotFont(self):
+        """设置字体"""
         ok, font = QFontDialog.getFont()
         if ok:
             plt.rcParams['font.family'] = font.family()
@@ -104,7 +104,6 @@ class matplotlibDemo(QMainWindow):
         axes.set_xlabel('动态图：X轴')
         axes.grid(True)  # 显示网格
         self.dynamic_canvas.draw()
-
         self.timer = self.dynamic_canvas.new_timer(50)
         self.timer.add_callback(self._update_canvas)
         self.timer.start()

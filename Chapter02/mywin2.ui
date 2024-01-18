@@ -183,7 +183,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>388</x>
-     <y>256</y>
+     <y>517</y>
     </hint>
     <hint type="destinationlabel">
      <x>369</x>
@@ -198,8 +198,8 @@
    <slot>testSlot()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>339</x>
-     <y>250</y>
+     <x>340</x>
+     <y>517</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>

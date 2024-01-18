@@ -39,17 +39,22 @@ class StatusDemo(QMainWindow):
     def init_statusBar(self):
         self.status_bar = QStatusBar()
         self.status_bar2 = QStatusBar()
-        self.status_bar2.setMinimumWidth(150)
+        self.status_bar2.setMinimumWidth(350)
         self.label = QLabel('显示永久信息：时间')
         self.button = QPushButton('清除时间')
-
+        self.status_bar.addWidget(QLabel('bar1'))
+        self.status_bar2.addWidget(QLabel('bar2'))
+        self.button2 = QPushButton('显示时间')
+        self.status_bar2.addWidget(self.button2)
         self.status_bar.addWidget(self.status_bar2)
         self.status_bar.addWidget(self.label)
         self.status_bar.addWidget(self.button)
 
         self.setWindowTitle("QStatusBar 例子")
         self.setStatusBar(self.status_bar)
+        self.button2.clicked.connect(lambda :self.status_bar2.showMessage(time.strftime("%Y-%m-%d %a %H:%M:%S"), 5000))
         self.button.clicked.connect(lambda :self.status_bar.removeWidget(self.label))
+
 
 
 

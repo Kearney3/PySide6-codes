@@ -5,6 +5,8 @@
 """
 
 from qtpandas.compat import Qt, QtCore, QtGui, Slot, Signal
+# from qtpandas.compat import Slot, Signal
+from PySide6 import Qt, QtCore, QtGui
 
 
 import pandas
@@ -12,8 +14,10 @@ import numpy as np
 
 from qtpandas.models.SupportedDtypes import SupportedDtypes
 
-DTYPE_ROLE = Qt.UserRole + 1
-DTYPE_CHANGE_ROLE = Qt.UserRole + 3
+# DTYPE_ROLE = Qt.UserRole + 1
+DTYPE_ROLE = 0 + 1
+# DTYPE_CHANGE_ROLE = Qt.UserRole + 3
+DTYPE_CHANGE_ROLE = 0 + 3
 
 class ColumnDtypeModel(QtCore.QAbstractTableModel):
     """Data model returning datatypes per column

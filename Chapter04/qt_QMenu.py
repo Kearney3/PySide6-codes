@@ -7,54 +7,67 @@
   
 '''
 
+import os
 import sys
+
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
-import os
+
 os.chdir(os.path.dirname(__file__))
+
 
 class MenuDemo(QMainWindow):
     def __init__(self, parent=None):
-        super(MenuDemo, self).__init__(parent)
+        super(MenuDemo, self).__init__(parent)  # 调用父类的构造函数初始化对象
 
-        widget = QWidget(self)
-        self.setCentralWidget(widget)
+        widget = QWidget(self)  # 创建一个新的QWidget对象
+        self.setCentralWidget(widget)  # 将创建的QWidget对象设置为菜单演示的中央部件
 
-        topFiller = QWidget()
-        topFiller.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        topFiller = QWidget()  # 创建一个新的QWidget对象
+        topFiller.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)  # 设置QWidget的大小和显示策略
 
-        self.infoLabel = QLabel("<i>Choose a menu option, or right-click to invoke a context menu</i>")
-        self.infoLabel.setFrameStyle(QFrame.StyledPanel | QFrame.Sunken)
-        self.infoLabel.setAlignment(Qt.AlignCenter)
+        self.infoLabel = QLabel("<i>Choose a menu option, or right-click to invoke a context menu</i>")  # 创建一个新的QLabel对象
+        self.infoLabel.setFrameStyle(QFrame.StyledPanel | QFrame.Sunken)  # 设置QLabel的框架样式
+        self.infoLabel.setAlignment(Qt.AlignCenter)  # 设置QLabel的文本对齐方式
 
-        bottomFiller = QWidget()
-        bottomFiller.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        bottomFiller = QWidget()  # 创建一个新的QWidget对象
+        bottomFiller.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)  # 设置QWidget的大小和显示策略
 
-        layout = QVBoxLayout()
-        layout.setContentsMargins(5, 5, 5, 5)
-        layout.addWidget(topFiller)
-        layout.addWidget(self.infoLabel)
-        layout.addWidget(bottomFiller)
-        widget.setLayout(layout)
+        layout = QVBoxLayout()  # 创建一个新的垂直布局
+        layout.setContentsMargins(5, 5, 5, 5)  # 设置布局元素之间的边距
+        layout.addWidget(topFiller)  # 将上部填充部件添加到布局中
+        layout.addWidget(self.infoLabel)  # 将信息标签添加到布局中
+        layout.addWidget(bottomFiller)  # 将下部填充部件添加到布局中
+        widget.setLayout(layout)  # 将布局应用于QWidget对象
 
-        self.createActions()
-        self.createMenus()
+        self.createActions()  # 创建动作
+        self.createMenus()  # 创建菜单
 
-        message = "A context menu is available by right-clicking"
-        self.statusBar().showMessage(message)
+        message = "A context menu is available by right-clicking"  # 设置消息字符串
+        self.statusBar().showMessage(message)  # 在状态栏中显示消息
 
-        self.setWindowTitle("Menus")
-        self.setMinimumSize(160, 160)
-        self.resize(480, 320)
+        self.setWindowTitle("Menus")  # 设置窗口标题为"Menus"
+        self.setMinimumSize(160, 160)  # 设置窗口最小尺寸为160x160
+        self.resize(480, 320)  # 设置窗口大小为480x320
 
+        def contextMenuEvent(self, event):
+            """
+            上下文菜单事件函数
+            参数:
+                event (QContextMenuEvent): 上下文菜单事件对象
+            """
+            # 创建一个菜单对象
+            menu = QMenu(self)
+            # 向菜单中添加剪切动作
+            menu.addAction(self.cutAct)
+            # 向菜单中添加复制动作
+            menu.addAction(self.copyAct)
+            # 向菜单中添加粘贴动作
+            menu.addAction(self.pasteAct)
+            # 在给定的全局位置处显示菜单
+            menu.exec(event.globalPos())
 
-    def contextMenuEvent(self, event):
-        menu = QMenu(self)
-        menu.addAction(self.cutAct)
-        menu.addAction(self.copyAct)
-        menu.addAction(self.pasteAct)
-        menu.exec(event.globalPos())
 
     def newFile(self):
         self.infoLabel.setText("Invoked <b>File|New</b>")
@@ -167,11 +180,16 @@ class MenuDemo(QMainWindow):
         self.pasteAct.triggered.connect(self.paste)
 
         self.boldAct = QAction("&Bold")
-        self.boldAct.setCheckable(True)
-        self.boldAct.setShortcut(QKeySequence.Bold)
+        self.boldAct.setCheckable(True)  # 可选择
+        # self.boldAct.setShortcut(QKeySequence.Bold)
+        # self.boldAct.setShortcut('Ctrl+B')
+        self.boldAct.setShortcut(QKeySequence(Qt.CTRL | Qt.Key_B))
         self.boldAct.setStatusTip("Make the text bold")
         self.boldAct.triggered.connect(self.bold)
+        self.boldAct.toggled.connect(lambda message: print(message))
+        print(QKeySequence.keyBindings(QKeySequence.Cut))
 
+        # 设置字体
         boldFont = self.boldAct.font()
         boldFont.setBold(True)
         self.boldAct.setFont(boldFont)
@@ -182,6 +200,7 @@ class MenuDemo(QMainWindow):
         self.italicAct.setStatusTip("Make the text italic")
         self.italicAct.triggered.connect(self.italic)
 
+        # 设置字体
         italicFont = self.italicAct.font()
         italicFont.setItalic(True)
         self.italicAct.setFont(italicFont)
@@ -192,7 +211,8 @@ class MenuDemo(QMainWindow):
 
         self.setParagraphSpacingAct = QAction("Set &Paragraph Spacing...")
         self.setParagraphSpacingAct.setStatusTip("Change the gap between paragraphs")
-        self.setParagraphSpacingAct.triggered.connect(self.setParagraphSpacing)
+        # self.setParagraphSpacingAct.triggered.connect(self.setParagraphSpacing)
+        self.setParagraphSpacingAct.hovered.connect(self.setParagraphSpacing)
 
         self.aboutAct = QAction("&About")
         self.aboutAct.setStatusTip("Show the application's About box")

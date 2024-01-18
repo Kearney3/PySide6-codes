@@ -17,20 +17,24 @@ class Button(QPushButton):
         super().__init__(title, parent)
 
     def mouseMoveEvent(self, e):
-        # print('b1 mouseMoveEvent 1')
+        # 鼠标移动事件的回调函数
+        # 打印'b1 mouseMoveEvent 1'
         if e.buttons() != Qt.RightButton:
             return
-
         print('b1 mouseMoveEvent 1')
+        # 创建QMimeData对象
         mimeData = QMimeData()
         drag = QDrag(self)
         drag.setMimeData(mimeData)
+        # 计算鼠标指针与控件左上角的差值，获得拖动时的锚点
         self.hotSpot = e.pos() - self.rect().topLeft()
         drag.setHotSpot(self.hotSpot)
-        print('b1 mouseMoveEvent 2')
+        # 打印'b1 mouseMoveEvent 2'
+        # 执行拖动动作，并设定拖动方式为移动动作
         dropAcion = drag.exec_(Qt.MoveAction)
-        print('b1 mouseMoveEvent 3')
+        # 打印'dropAcion'
         print(dropAcion)
+
 
 
     def mousePressEvent(self, e):

@@ -1,9 +1,12 @@
-from PySide6.QtWidgets import *
-from PySide6.QtGui import *
-from PySide6.QtCore import *
-import sys
 import os
+import sys
+
+from PySide6.QtCore import *
+from PySide6.QtGui import *
+from PySide6.QtWidgets import *
+
 os.chdir(os.path.dirname(__file__))
+
 
 class QTableWidgetDemo(QMainWindow):
     addCount = 0
@@ -14,8 +17,10 @@ class QTableWidgetDemo(QMainWindow):
         self.setWindowTitle("QTableWidget案例")
         self.resize(500, 600)
         self.text = QPlainTextEdit('用来显示QTableWidget相关信息：')
-        self.tableWidget = QTableWidget(5, 4)
-
+        self.tableWidget = QTableWidget(5, 4)  # 创建一个5行4列的QTableWidget对象
+        # 设置QTableWidget的行数和列数
+        # self.tableWidget.setRowCount(5)
+        # self.tableWidget.setColumnCount(4)
 
         # 增删行
         self.buttonDeleteRow = QPushButton('删除行')
@@ -25,9 +30,9 @@ class QTableWidgetDemo(QMainWindow):
         layoutH.addWidget(self.buttonAddRow)
         layoutH.addWidget(self.buttonInsertRow)
         layoutH.addWidget(self.buttonDeleteRow)
-        self.buttonAddRow.clicked.connect(lambda: self.onAdd('row'))
-        self.buttonInsertRow.clicked.connect(lambda: self.onInsert('row'))
-        self.buttonDeleteRow.clicked.connect(lambda: self.onDelete('row'))
+        self.buttonAddRow.clicked.connect(lambda: self.onAdd('row'))  # 当按钮被点击时，调用self.onAdd('row')函数
+        self.buttonInsertRow.clicked.connect(lambda: self.onInsert('row'))  # 当按钮被点击时，调用self.onInsert('row')函数
+        self.buttonDeleteRow.clicked.connect(lambda: self.onDelete('row'))  # 当按钮被点击时，调用self.onDelete('row')函数
         # 增删列
         self.buttonDeleteColumn = QPushButton('删除列')
         self.buttonAddColumn = QPushButton('增加列')
@@ -36,9 +41,9 @@ class QTableWidgetDemo(QMainWindow):
         layoutH2.addWidget(self.buttonAddColumn)
         layoutH2.addWidget(self.buttonInsertColumn)
         layoutH2.addWidget(self.buttonDeleteColumn)
-        self.buttonAddColumn.clicked.connect(lambda: self.onAdd('column'))
-        self.buttonInsertColumn.clicked.connect(lambda: self.onInsert('column'))
-        self.buttonDeleteColumn.clicked.connect(lambda: self.onDelete('column'))
+        self.buttonAddColumn.clicked.connect(lambda: self.onAdd('column'))  # 当按钮被点击时，调用self.onAdd('column')函数
+        self.buttonInsertColumn.clicked.connect(lambda: self.onInsert('column'))  # 当按钮被点击时，调用self.onInsert('column')函数
+        self.buttonDeleteColumn.clicked.connect(lambda: self.onDelete('column'))  # 当按钮被点击时，调用self.onDelete('column')函数
 
         # 选择
         self.buttonSelectAll = QPushButton('全选')
@@ -50,11 +55,11 @@ class QTableWidgetDemo(QMainWindow):
         layoutH3.addWidget(self.buttonSelectRow)
         layoutH3.addWidget(self.buttonSelectColumn)
         layoutH3.addWidget(self.buttonSelectOutput)
-        self.buttonSelectAll.clicked.connect(lambda: self.tableWidget.selectAll())
+        self.buttonSelectAll.clicked.connect(lambda: self.tableWidget.selectAll())  # 当按钮被点击时，选中表中的所有项
         # self.buttonSelectAll.clicked.connect(self.onSelectAll)
-        self.buttonSelectRow.clicked.connect(lambda: self.tableWidget.selectRow(self.tableWidget.currentRow()))
-        self.buttonSelectColumn.clicked.connect(lambda: self.tableWidget.selectColumn(self.tableWidget.currentColumn()))
-        self.buttonSelectOutput.clicked.connect(self.onButtonSelectOutput)
+        self.buttonSelectRow.clicked.connect(lambda: self.tableWidget.selectRow(self.tableWidget.currentRow()))  # 当按钮被点击时，选中当前行的所有项
+        self.buttonSelectColumn.clicked.connect(lambda: self.tableWidget.selectColumn(self.tableWidget.currentColumn()))  # 当按钮被点击时，选中当前列的所有项
+        self.buttonSelectOutput.clicked.connect(self.onButtonSelectOutput)  # 当按钮被点击时，调用self.onButtonSelectOutput函数
         # self.buttonSelectColumn.clicked.connect(self.onCheckNone)
 
         layout = QVBoxLayout(self)
@@ -71,33 +76,28 @@ class QTableWidgetDemo(QMainWindow):
 
         self.initItem()
 
-
-
-
-        # selection
+        # 设置选择模式
         # self.listWidget.setSelectionMode(QAbstractItemView.SingleSelection)
         self.tableWidget.setSelectionMode(QAbstractItemView.ExtendedSelection)
         # self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.tableWidget.setSelectionBehavior(QAbstractItemView.SelectItems)
 
-        # 行列标题
+        # 设置表头
         rowCount = self.tableWidget.rowCount()
         columnCount = self.tableWidget.columnCount()
-        self.tableWidget.setHorizontalHeaderLabels([f'col{i}' for i in range(columnCount)])
-        self.tableWidget.setVerticalHeaderLabels([f'row{i}' for i in range(rowCount)])
-        cusHeaderItem = QTableWidgetItem("cusHeader")
-        cusHeaderItem.setIcon(QIcon("images/android.png"))
-        cusHeaderItem.setTextAlignment(Qt.AlignVCenter)
-        cusHeaderItem.setForeground(QBrush(QColor(255, 0, 0)))
-        self.tableWidget.setHorizontalHeaderItem(2,cusHeaderItem)
+        self.tableWidget.setHorizontalHeaderLabels([f'col{i}' for i in range(columnCount)])  # 设置水平表头标签
+        self.tableWidget.setVerticalHeaderLabels([f'row{i}' for i in range(rowCount)])  # 设置垂直表头标签
+        cusHeaderItem = QTableWidgetItem("cusHeader")  # 创建一个自定义的表头项
+        cusHeaderItem.setIcon(QIcon("images/android.png"))  # 设置表头项的图标
+        cusHeaderItem.setTextAlignment(Qt.AlignVCenter)  # 设置表头项的文本对齐方式
+        cusHeaderItem.setForeground(QBrush(QColor(255, 0, 0)))  # 设置表头项的前景色
+        self.tableWidget.setHorizontalHeaderItem(2, cusHeaderItem)  # 设置第3个水平表头项
 
         # 自定义控件
         model = self.tableWidget.model()
-        self.tableWidget.setIndexWidget(model.index(4,3),QLineEdit('自定义控件-'*3))
-        self.tableWidget.setIndexWidget(model.index(4,2),QSpinBox())
-        self.tableWidget.setCellWidget(4,1,QPushButton("cellWidget"))
-
-
+        self.tableWidget.setIndexWidget(model.index(4, 3), QLineEdit('自定义控件-' * 3))  # 在第5行第4列设置一个自定义控件
+        self.tableWidget.setIndexWidget(model.index(4, 2), QSpinBox())  # 在第5行第3列设置一个自定义控件
+        self.tableWidget.setCellWidget(4, 1, QPushButton("cellWidget"))  # 在第5行第2列设置一个自定义控件
 
         # 调整行列宽高
         header = self.tableWidget.horizontalHeader()
@@ -108,22 +108,20 @@ class QTableWidgetDemo(QMainWindow):
         # header.moveSection(0,2)
         # # self.tableView.resizeColumnsToContents()
 
-        # header.setStretchLastSection(True)
+        # headerH = self.tableWidget.horizontalHeader()
 
-        self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.resizeRowsToContents()
+        self.tableWidget.resizeColumnsToContents()  # 调整列宽，使得列宽适应列中的内容
+        self.tableWidget.resizeRowsToContents()  # 调整行高，使得行高适应行中的内容
         # headerH = self.tableWidget.horizontalHeader()
 
         # 排序单元格
         # self.tableWidget.sortItems(1,order=Qt.DescendingOrder)
 
         # 合并单元格
-        self.tableWidget.setSpan(1, 0, 1, 2)
-        item = QTableWidgetItem('合并单元格')
-        item.setTextAlignment(Qt.AlignCenter)
-        self.tableWidget.setItem(1,0,item)
-
-
+        self.tableWidget.setSpan(1, 0, 1, 2)  # 合并第1行第0列到第1列的单元格
+        item = QTableWidgetItem('合并单元格')  # 创建一个表项
+        item.setTextAlignment(Qt.AlignCenter)  # 设置表项的文本对齐方式
+        self.tableWidget.setItem(1, 0, item)  # 在第1行第0列设置表项
 
         # 显示坐标
         buttonShowPosition = QToolButton(self)
@@ -131,11 +129,10 @@ class QTableWidgetDemo(QMainWindow):
         self.toolbar.addWidget(buttonShowPosition)
         buttonShowPosition.clicked.connect(self.onButtonShowPosition)
 
-
         # 上下文菜单
-        self.menu = self.generateMenu()
-        self.tableWidget.setContextMenuPolicy(Qt.CustomContextMenu)  ######允许右键产生子菜单
-        self.tableWidget.customContextMenuRequested.connect(self.showMenu)  ####右键菜单
+        self.menu = self.generateMenu()  # 生成上下文菜单
+        self.tableWidget.setContextMenuPolicy(Qt.CustomContextMenu)  # 允许右键产生子菜单
+        self.tableWidget.customContextMenuRequested.connect(self.showMenu)  # 右键菜单
 
         # 信号与槽
         self.tableWidget.currentItemChanged[QTableWidgetItem, QTableWidgetItem].connect(self.onCurrentItemChanged)
@@ -150,24 +147,25 @@ class QTableWidgetDemo(QMainWindow):
         self.tableWidget.itemPressed[QTableWidgetItem].connect(
             lambda item: self.text.appendPlainText(f'"{item.text()}"触发itemPressed信号：'))
         self.tableWidget.itemSelectionChanged.connect(lambda: self.text.appendPlainText(f'触发itemSelectionChanged信号：'))
-        self.tableWidget.cellActivated[int,int].connect(lambda row,column:self.onCellSignal(row,column,'cellActivated'))
-        self.tableWidget.cellChanged[int,int].connect(lambda row,column:self.onCellSignal(row,column,'cellChanged'))
-        self.tableWidget.cellClicked[int,int].connect(lambda row,column:self.onCellSignal(row,column,'cellClicked'))
-        self.tableWidget.cellDoubleClicked[int,int].connect(lambda row,column:self.onCellSignal(row,column,'cellDoubleClicked'))
-        self.tableWidget.cellEntered[int,int].connect(lambda row,column:self.onCellSignal(row,column,'cellEntered'))
-        self.tableWidget.cellPressed[int,int].connect(lambda row,column:self.onCellSignal(row,column,'cellPressed'))
-        self.tableWidget.currentCellChanged[int,int,int,int].connect(lambda currentRow,currentColumn,previousRow,previousColumn:self.text.appendPlainText(f'row:{currentRow},column:{currentColumn},触发信号:currentCellChanged,preRow:{previousRow},preColumn:{columnCount}'))
+        self.tableWidget.cellActivated[int, int].connect(lambda row, column: self.onCellSignal(row, column, 'cellActivated'))
+        self.tableWidget.cellChanged[int, int].connect(lambda row, column: self.onCellSignal(row, column, 'cellChanged'))
+        self.tableWidget.cellClicked[int, int].connect(lambda row, column: self.onCellSignal(row, column, 'cellClicked'))
+        self.tableWidget.cellDoubleClicked[int, int].connect(lambda row, column: self.onCellSignal(row, column, 'cellDoubleClicked'))
+        self.tableWidget.cellEntered[int, int].connect(lambda row, column: self.onCellSignal(row, column, 'cellEntered'))
+        self.tableWidget.cellPressed[int, int].connect(lambda row, column: self.onCellSignal(row, column, 'cellPressed'))
+        self.tableWidget.currentCellChanged[int, int, int, int].connect(lambda currentRow, currentColumn, previousRow, previousColumn:
+                                                                       self.text.appendPlainText(f'row:{currentRow},column:{currentColumn},触发信号:currentCellChanged,preRow:{previousRow},preColumn:{columnCount}'))
 
     def initItem(self):
         # flag+check
         item = QTableWidgetItem('flag+check1')
-        item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEditable | Qt.ItemIsEnabled|Qt.ItemIsUserCheckable)
+        item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEditable | Qt.ItemIsEnabled | Qt.ItemIsUserCheckable)
         item.setCheckState(Qt.Unchecked)
-        self.tableWidget.setItem(2,0,item)
+        self.tableWidget.setItem(2, 0, item)
         item = QTableWidgetItem('flag+check2')
         item.setFlags(Qt.NoItemFlags)
         item.setCheckState(Qt.Unchecked)
-        self.tableWidget.setItem(2,1,item)
+        self.tableWidget.setItem(2, 1, item)
         # setText
         item = QTableWidgetItem()
         item.setText('右对齐+check')
@@ -181,7 +179,7 @@ class QTableWidgetDemo(QMainWindow):
         self.tableWidget.setItem(3, 1, item)
         # setFont、setFore(Back)ground
         item = QTableWidgetItem(f'setFont、setFore(Back)ground')
-        item.setFont(QFont('宋体'))
+        # item.setFont(QFont('宋体'))
         item.setForeground(QBrush(QColor(255, 0, 0)))
         item.setBackground(QBrush(QColor(0, 255, 0)))
         self.tableWidget.setItem(3, 2, item)
@@ -220,24 +218,23 @@ class QTableWidgetDemo(QMainWindow):
                     _item = QTableWidgetItem(f'row:{row},col:{col}')
                     self.tableWidget.setItem(row, col, _item)
 
-
     def generateMenu(self):
         menu = QMenu(self)
         menu.addAction('增加行', lambda: self.onAdd('row'), QKeySequence(Qt.CTRL | Qt.Key_N))
         menu.addAction('插入行', lambda: self.onInsert('row'), QKeySequence(Qt.CTRL | Qt.Key_I))
         menu.addAction(QIcon("images/close.png"), '删除行', lambda: self.onDelete('row'), QKeySequence(Qt.CTRL | Qt.Key_D))
         menu.addSeparator()
-        menu.addAction('增加列', lambda: self.onAdd('column'), QKeySequence(Qt.CTRL|Qt.SHIFT | Qt.Key_N))
-        menu.addAction('插入列', lambda: self.onInsert('column'), QKeySequence(Qt.CTRL|Qt.SHIFT | Qt.Key_I))
-        menu.addAction(QIcon("images/close.png"), '删除列', lambda: self.onDelete('column'), QKeySequence(Qt.CTRL|Qt.SHIFT | Qt.Key_D))
+        menu.addAction('增加列', lambda: self.onAdd('column'), QKeySequence(Qt.CTRL | Qt.SHIFT | Qt.Key_N))
+        menu.addAction('插入列', lambda: self.onInsert('column'), QKeySequence(Qt.CTRL | Qt.SHIFT | Qt.Key_I))
+        menu.addAction(QIcon("images/close.png"), '删除列', lambda: self.onDelete('column'), QKeySequence(Qt.CTRL | Qt.SHIFT | Qt.Key_D))
         menu.addSeparator()
         menu.addAction('全选', lambda: self.tableWidget.selectAll(), QKeySequence(Qt.CTRL | Qt.Key_A))
         menu.addAction('选择行', lambda: self.tableWidget.selectRow(self.tableWidget.currentRow()), QKeySequence(Qt.CTRL | Qt.Key_R))
-        menu.addAction('选择列', lambda: self.tableWidget.selectColumn(self.tableWidget.currentColumn()), QKeySequence(Qt.CTRL |Qt.SHIFT| Qt.Key_R))
+        menu.addAction('选择列', lambda: self.tableWidget.selectColumn(self.tableWidget.currentColumn()), QKeySequence(Qt.CTRL | Qt.SHIFT | Qt.Key_R))
         menu.addAction('输出选择', self.onButtonSelectOutput)
         menu.addSeparator()
         menu.addAction(self.actionHelp)
-        menu.addAction('显示当前位置',lambda :self.onButtonShowPosition())
+        menu.addAction('显示当前位置', lambda: self.onButtonShowPosition())
         return menu
 
     def showMenu(self, pos):
@@ -253,17 +250,16 @@ class QTableWidgetDemo(QMainWindow):
     def onButtonSelectOutput(self):
         indexList = self.tableWidget.selectedIndexes()
         itemList = self.tableWidget.selectedItems()
-        _row =indexList[0].row()
+        _row = indexList[0].row()
         text = ''
-        for index,item in zip(indexList,itemList):
+        for index, item in zip(indexList, itemList):
             row = index.row()
             if _row == row:
-                text = text  +item.text()+ '  '
+                text = text + item.text() + '  '
             else:
-                text =text + '\n'+ item.text()+ '  '
-                _row=row
+                text = text + '\n' + item.text() + '  '
+                _row = row
         self.text.appendPlainText(text)
-
 
     def onCurrentItemChanged(self, current: QTableWidgetItem, previous: QTableWidgetItem):
         if previous == None:
@@ -295,7 +291,7 @@ class QTableWidgetDemo(QMainWindow):
         self.text.appendPlainText(f'"{item.text()}"触发itemActivated信号：')
         return
 
-    def onCellSignal(self,row,column,type):
+    def onCellSignal(self, row, column, type):
         _str = f'row:{row},column:{column},触发信号:{type}'
         self.text.appendPlainText(_str)
 
@@ -360,9 +356,10 @@ class QTableWidgetDemo(QMainWindow):
         column = self.tableWidget.currentColumn()
         columnPositon = self.tableWidget.columnViewportPosition(column)
         columnAt = self.tableWidget.columnAt(columnPositon)
-        _str = f'当前row:{row},rowPosition:{rowPositon},rowAt:{rowAt}'+ \
-            f'\n当前column:{column},columnPosition:{columnPositon},columnAt:{columnAt}'
+        _str = f'当前row:{row},rowPosition:{rowPositon},rowAt:{rowAt}' + \
+               f'\n当前column:{column},columnPosition:{columnPositon},columnAt:{columnAt}'
         self.text.appendPlainText(_str)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

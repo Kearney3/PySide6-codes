@@ -6,10 +6,11 @@
   
 '''
 
+import sys
+
+from PySide6.QtCore import QTimer, QDateTime
 from PySide6.QtWidgets import QWidget, QPushButton, QApplication, QListWidget, QGridLayout, QLabel, QCheckBox, \
     QMessageBox
-from PySide6.QtCore import QTimer, QDateTime, Qt
-import sys
 
 
 class WinForm(QWidget):
@@ -27,13 +28,15 @@ class WinForm(QWidget):
         # 初始化定时器
         self.timer = QTimer(self)
         self.timer2 = QTimer()
-        self.timer2.setSingleShot(True)
+        self.timer2.setSingleShot(True)  # 只发射一次信号
 
         # showTime()方法
-        self.timer.timeout.connect(self.showTime)
+        self.timer.timeout.connect(self.showTime)   # 超时调用槽函数
 
         self.checkBox = QCheckBox("单次计时")
-        self.checkBox.stateChanged.connect(self.timer.setSingleShot)
+        self.checkBox.stateChanged.connect(self.timer.setSingleShot)    # 接受 Checked, partiallyChecked
+        self.checkBox.stateChanged.connect(lambda signal: print(signal))
+        self.checkBox.stateChanged.connect(lambda signal: print(bool(signal)))
 
         layout.addWidget(self.label, 0, 0, 1, 2)
         layout.addWidget(self.startBtn, 1, 0)
@@ -57,7 +60,7 @@ class WinForm(QWidget):
 
     def startTimer(self):
         # 设置计时间隔并启动
-        self.timer.start(1000)
+        self.timer.start(1000)  # 1000毫秒
         self.startBtn.setEnabled(False)
         self.endBtn.setEnabled(True)
 

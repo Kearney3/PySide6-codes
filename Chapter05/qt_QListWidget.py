@@ -24,9 +24,9 @@ class QListWidgetDemo(QMainWindow):
         layoutH.addWidget(self.buttonInsert)
         layoutH.addWidget(self.buttonDelete)
 
-        self.buttonAdd.clicked.connect(self.onAdd)
-        self.buttonInsert.clicked.connect(self.onInsert)
-        self.buttonDelete.clicked.connect(self.onDelete)
+        self.buttonAdd.clicked.connect(self.onAdd)  # 点击“增加”按钮时调用self.onAdd方法
+        self.buttonInsert.clicked.connect(self.onInsert)  # 点击“插入”按钮时调用self.onInsert方法
+        self.buttonDelete.clicked.connect(self.onDelete)  # 点击“删除”按钮时调用self.onDelete方法
 
         # 选择
         self.buttonCheckAll = QPushButton('全选')
@@ -36,9 +36,9 @@ class QListWidgetDemo(QMainWindow):
         layoutH2.addWidget(self.buttonCheckAll)
         layoutH2.addWidget(self.buttonCheckInverse)
         layoutH2.addWidget(self.buttonCheckNone)
-        self.buttonCheckAll.clicked.connect(self.onCheckAll)
-        self.buttonCheckInverse.clicked.connect(self.onCheckInverse)
-        self.buttonCheckNone.clicked.connect(self.onCheckNone)
+        self.buttonCheckAll.clicked.connect(self.onCheckAll)  # 点击“全选”按钮时调用self.onCheckAll方法
+        self.buttonCheckInverse.clicked.connect(self.onCheckInverse)  # 点击“反选”按钮时调用self.onCheckInverse方法
+        self.buttonCheckNone.clicked.connect(self.onCheckNone)  # 点击“全不选”按钮时调用self.onCheckNone方法
 
         layout = QVBoxLayout(self)
         layout.addWidget(self.listWidget)
@@ -52,71 +52,71 @@ class QListWidgetDemo(QMainWindow):
 
         # 添加item
         for n in range(3):
-            _str = 'item row {0}'.format(n)
-            self.listWidget.addItem(_str)
-        self.listWidget.addItem(QListWidgetItem('haha'))
-        QListWidgetItem('haha2', self.listWidget)
+            _str = f'item row {n}'
+            self.listWidget.addItem(_str)  # 向列表中添加item
+        self.listWidget.addItem(QListWidgetItem('haha'))  # 向列表中添加item
+        QListWidgetItem('haha2', self.listWidget)  # 向列表中添加item
 
-        self.listWidget.insertItem(2, 'item insert')
+        self.listWidget.insertItem(2, 'item insert')  # 在指定位置插入item
 
         # flag 和 check
         for i in range(self.listWidget.count()):
             item = self.listWidget.item(i)
-            item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEditable | Qt.ItemIsEnabled)
+            item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEditable | Qt.ItemIsEnabled)  # 设置item的属性
             # item.setFlags(Qt.NoItemFlags)
-            item.setCheckState(Qt.Unchecked)
+            item.setCheckState(Qt.Unchecked)  # 设置item的选中状态
         # setText
-        item.setText('setText-右对齐')
-        item.setTextAlignment(Qt.AlignRight)
-        item.setCheckState(Qt.Checked)
+        item.setText('setText-右对齐')  # 设置item的文本
+        item.setTextAlignment(Qt.AlignRight)  # 设置item的文本对齐方式
+        item.setCheckState(Qt.Checked)  # 设置item的选中状态
 
         # selection
         # self.listWidget.setSelectionMode(QAbstractItemView.SingleSelection)
-        self.listWidget.setSelectionMode(QAbstractItemView.ExtendedSelection)
-        self.listWidget.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.listWidget.setSelectionMode(QAbstractItemView.ExtendedSelection)  # 设置选择模式
+        self.listWidget.setSelectionBehavior(QAbstractItemView.SelectRows)  # 设置选择行为
 
         # setIcon
-        item = QListWidgetItem('setIcon')
-        item.setIcon(QIcon('images/music.png'))
-        self.listWidget.addItem(item)
+        item = QListWidgetItem('setIcon')  # 创建一个item
+        item.setIcon(QIcon('images/music.png'))  # 设置item的图标
+        self.listWidget.addItem(item)  # 向列表中添加item
 
         # setFont、setFore(Back)ground
-        item = QListWidgetItem('setFont、Fore(Back)ground')
-        item.setFont(QFont('宋体'))
-        item.setForeground(QBrush(QColor(255, 0, 0)))
-        item.setBackground(QBrush(QColor(0, 255, 0)))
-        item.setWhatsThis('whatsThis提示1-setFont、Fore(Back)ground')
-        self.listWidget.addItem(item)
+        item = QListWidgetItem('setFont、Fore(Back)ground')  # 创建一个item
+        # item.setFont(QFont('宋体'))
+        item.setForeground(QBrush(QColor(255, 0, 0)))  # 设置item的前景色
+        item.setBackground(QBrush(QColor(0, 255, 0)))  # 设置item的背景色
+        item.setWhatsThis('whatsThis提示1-setFont、Fore(Back)ground')  # 设置item的“是什么”提示信息
+        self.listWidget.addItem(item)  # 向列表中添加item
 
         # setToolTip,StatusTip,WhatsThis
-        item = QListWidgetItem('set提示-ToolTip,StatusTip,WhatsThis')
-        item.setToolTip('toolTip提示')
-        item.setStatusTip('statusTip提示')
-        item.setWhatsThis('whatsThis提示2')
-        self.listWidget.setMouseTracking(True)
-        self.listWidget.addItem(item)
+        item = QListWidgetItem('set提示-ToolTip,StatusTip,WhatsThis')  # 创建一个item
+        item.setToolTip('toolTip提示')  # 设置item的工具提示
+        item.setStatusTip('statusTip提示')  # 设置item的状态提示
+        item.setWhatsThis('whatsThis提示2')  # 设置item的“是什么”提示信息
+        self.listWidget.setMouseTracking(True)  # 启用鼠标追踪
+        self.listWidget.addItem(item)  # 向列表中添加item
         # 开启statusbar
         statusBar = self.statusBar()
-        statusBar.show()
+        statusBar.show()  # 显示状态栏
 
         # 开启whatsThis功能
         whatsThis = QWhatsThis(self)
-        toolbar = self.addToolBar('help')
+        toolbar = self.addToolBar('help')  # 添加一个工具栏
         #    方式1：QAction
         self.actionHelp = whatsThis.createAction(self)
-        self.actionHelp.setText('显示whatsThis-help')
+        self.actionHelp.setText('显示whatsIt-help')  # 设置动作的文本
         # self.actionHelp.setShortcuts(QKeySequence(Qt.CTRL | Qt.Key_H))
-        self.actionHelp.setShortcuts(QKeySequence(Qt.CTRL + Qt.Key_H))
-        toolbar.addAction(self.actionHelp)
+        self.actionHelp.setShortcuts(QKeySequence(Qt.CTRL | Qt.Key_H))  # 设置动作的快捷键
+        toolbar.addAction(self.actionHelp)  # 将动作添加到工具栏
         #   方式2：工具按钮
         tool_button = QToolButton(self)
-        tool_button.setToolTip("显示whatsThis2-help")
+        tool_button.setToolTip("显示whatsIt2-help")  # 设置工具按钮的工具提示
         tool_button.setIcon(QIcon("images/help.jpg"))
-        toolbar.addWidget(tool_button)
-        tool_button.clicked.connect(lambda: whatsThis.enterWhatsThisMode())
+        toolbar.addWidget(tool_button)  # 将工具按钮添加到工具栏
+        tool_button.clicked.connect(lambda: whatsThis.enterWhatsThisMode())  # 连接工具按钮的点击事件
 
         # 上下文菜单
-        self.menu = self.generateMenu()
+        self.menu = self.generateMenu()  # 生成上下文菜单
         self.listWidget.setContextMenuPolicy(Qt.CustomContextMenu)  ######允许右键产生子菜单
         self.listWidget.customContextMenuRequested.connect(self.showMenu)  ####右键菜单
 
@@ -138,21 +138,35 @@ class QListWidgetDemo(QMainWindow):
             lambda item: self.text.appendPlainText(f'"{item.text()}"触发itemPressed信号：'))
         self.listWidget.itemSelectionChanged.connect(lambda: self.text.appendPlainText(f'触发itemSelectionChanged信号：'))
 
+
     def generateMenu(self):
+        # 生成上下文菜单
         menu = QMenu(self)
+        # 增加菜单项，动作名为'增加'，触发事件为onAdd，快捷键为Ctrl+N
         menu.addAction('增加',self.onAdd,QKeySequence(Qt.CTRL|Qt.Key_N))
+        # 增加菜单项，动作名为'插入'，触发事件为onInsert，快捷键为Ctrl+I
         menu.addAction('插入',self.onInsert,QKeySequence(Qt.CTRL|Qt.Key_I))
+        # 增加菜单项，图标为images/close.png，动作名为'删除'，触发事件为onDelete，快捷键为Ctrl+D
         menu.addAction(QIcon("images/close.png"),'删除',self.onDelete,QKeySequence(Qt.CTRL|Qt.Key_D))
+        # 添加分隔线
         menu.addSeparator()
+        # 增加菜单项，动作名为'全选'，触发事件为onCheckAll，快捷键为Ctrl+A
         menu.addAction('全选',self.onCheckAll,QKeySequence(Qt.CTRL|Qt.Key_A))
+        # 增加菜单项，动作名为'反选'，触发事件为onCheckInverse，快捷键为Ctrl+R
         menu.addAction('反选',self.onCheckInverse,QKeySequence(Qt.CTRL|Qt.Key_R))
+        # 增加菜单项，动作名为'全不选'，触发事件为onCheckInverse
         menu.addAction('全不选',self.onCheckInverse)
+        # 添加分隔线
         menu.addSeparator()
+        # 增加菜单项，动作名为actionHelp
         menu.addAction(self.actionHelp)
+        # 返回菜单
         return menu
+
 
     def showMenu(self, pos):
         self.menu.exec(QCursor.pos())  # 显示菜单
+        # pass
 
     def contextMenuEvent(self, event):
         menu = QMenu(self)

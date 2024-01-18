@@ -20,8 +20,8 @@ class TabDemo(QWidget):
         self.tab3Init()
 
         # 修改选项卡默认信息
-        self.tabWidget.setTabShape(self.tabWidget.Triangular)
-        self.tabWidget.setTabPosition(self.tabWidget.South)
+        self.tabWidget.setTabShape(QTabWidget.Triangular)
+        self.tabWidget.setTabPosition(QTabWidget.South)
 
         pageComboBox = QComboBox()
         pageComboBox.addItem("Goto Page 0")

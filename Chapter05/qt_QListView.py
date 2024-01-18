@@ -15,8 +15,10 @@ class QListViewDemo(QWidget):
         self.setWindowTitle("QListView案例")
         self.text = QPlainTextEdit('用来显示QListView相关信息：')
         self.listView = QListView()
-        self.model = QStringListModel(['row'+str(i) for i in range(6)])
+        # 创建QStringListModel对象，用于为QListView提供数据
+        self.model = QStringListModel(['row'+str(i) for i in range(16)])
         # self.model.setStringList(['row'+str(i) for i in range(6)])
+        # 将QStringListModel提供的数据设置给QListView
         self.listView.setModel(self.model)
 
         # 作为对照组
@@ -37,6 +39,7 @@ class QListViewDemo(QWidget):
         layoutH.addWidget(self.buttonDown)
         layoutH.addWidget(self.buttonDelete)
 
+        # 按钮的点击事件连接
         self.buttonAdd.clicked.connect(self.onAdd)
         self.buttonInsert.clicked.connect(self.onInsert)
         self.buttonUp.clicked.connect(self.onUp)
@@ -64,26 +67,29 @@ class QListViewDemo(QWidget):
         self.setLayout(layout)
 
         # selection
-        # self.listWidget.setSelectionMode(QAbstractItemView.SingleSelection)
+        # 设置QListView的选中模式为扩展选择
         self.listView.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        # 设置QListView的选中行为选择行
         self.listView.setSelectionBehavior(QAbstractItemView.SelectRows)
 
         # 上下文菜单
         self.menu = self.generateMenu()
-        self.listView.setContextMenuPolicy(Qt.CustomContextMenu)  ######允许右键产生子菜单
-        self.listView.customContextMenuRequested.connect(self.showMenu)  ####右键菜单
+        self.listView.setContextMenuPolicy(Qt.CustomContextMenu)  # 允许右键产生子菜单，不会使用全局菜单
+        self.listView.customContextMenuRequested.connect(self.showMenu)  # 右键菜单
 
         # 列表视图布局
-        self.listView.setResizeMode(self.listView.Adjust)
-        self.listView.setLayoutMode(self.listView.Batched)
-        self.listView.setMovement(self.listView.Snap)
+        self.listView.setResizeMode(QListView.Adjust)
+        self.listView.setLayoutMode(QListView.Batched)
+        self.listView.setMovement(QListView.Snap)
         self.listView.setUniformItemSizes(True)
         self.listView.setGridSize(QSize(10,20))
 
-        self.listView2.setViewMode(self.listView.IconMode)
+        self.listView2.setViewMode(QListView.IconMode)
         self.listView2.setSpacing(1)
-        self.listView2.setFlow(self.listView2.LeftToRight)
+        self.listView2.setFlow(QListView.LeftToRight)
         self.listView2.setIconSize(QSize(2,3))
+        # self.listView2.setResizeMode(QListView.Adjust)
+
 
 
     def generateMenu(self):
@@ -100,14 +106,16 @@ class QListViewDemo(QWidget):
         return menu
 
     def showMenu(self, pos):
-        self.menu.exec(QCursor.pos())  # 显示菜单
+        self.menu.exec(QCursor.pos())  # 在右键的位置显示菜单
 
     def contextMenuEvent(self, event):
         menu = QMenu(self)
         menu.addAction('选项1')
         menu.addAction('选项2')
         menu.addAction('选项3')
-        menu.exec(event.globalPos())
+        # menu.exec(event.globalPos())
+        # menu.exec()
+        menu.exec(QCursor.pos())
 
     def onAdd(self):
         self.addCount += 1
@@ -119,19 +127,32 @@ class QListViewDemo(QWidget):
         self.text.appendPlainText(f'新增item:"{text}"')
 
     def onInsert(self):
+        # 插入计数加一
         self.insertCount += 1
+        # 获取当前选中项的索引
         index = self.listView.currentIndex()
+        # self.text.appendPlainText(str(index))
+        # 获取要插入的文本
         row = index.row()
         text = f'插入-{self.insertCount}'
+        # 插入行
         self.model.insertRow(row)
-        self.model.setData(index,text)
+        # 设置数据
+        self.model.setData(index, text)
+        # 将row和插入的文本输出到self.text
         self.text.appendPlainText(f'row:{row},新增item:"{text}"')
 
+
     def onUp(self):
+        # 获取当前选中项的索引
         index = self.listView.currentIndex()
+        # 获取当前选中项所在的行数
         row = index.row()
-        if row>0:
-            self.model.moveRow(QModelIndex(),row,QModelIndex(),row-1)
+        # 如果当前行数大于0，则将当前行移动到上一行
+        if row > 0:
+            # 使用了两个无效的 QModelIndex() 实例，这是因为该函数可能期望的是父级索引，而对于没有父级或者根级别的移动操作，可以传入无效索引
+            self.model.moveRow(QModelIndex(), row, QModelIndex(), row-1)
+
 
     def onDown(self):
         index = self.listView.currentIndex()
